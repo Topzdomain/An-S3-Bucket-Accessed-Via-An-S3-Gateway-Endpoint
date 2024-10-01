@@ -13,7 +13,7 @@ Project credit: thyagomota, github.com/thyagomota/aws-labs/master/lab-014
 
 
 <p align="center">
-<img src="Architecture Diagram" height="50%" width="70%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/Architecture_Diagram.png" height="50%" width="70%"/>
 </p>
 <h5 align="center"> Network Architecture</h5>
 
