@@ -18,140 +18,132 @@ Project credit: thyagomota, github.com/thyagomota/aws-labs/master/lab-014
 <h5 align="center"> Network Architecture</h5>
 
 
-<h2 align="left"> Creating the VPC</h2>
+<h3 align="left"> Creating the VPC</h3>
 
 Based on the network architecture, I created a VPC with a CIDR of 192.168.0.0/16.
 
 <p align="center">
-<img src="vpc" height="65%" width="50%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/vpc.png" height="50%" width="70%"/>
 </p>
 
-<h2 align="left"> Creating Internet Gateway</h2>
+<h3 align="left"> Creating Internet Gateway</h3>
 
 Next, I created the internet gateway which I attached to the vpc.
 
 <p align="center">
-<img src="igw" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/igw.png" height="50%" width="70%"/>
 </p>
 
 <p align="center">
-<img src="attaching-igw-to-vpc" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/attaching-igw-to-vpc.png" height="50%" width="70%"/>
 </p>
 
-<h2 align="left"> Creating Subnets</h2>
+<h3 align="left"> Creating Subnets</h3>
 
 Next, I created two subnets, a public (bastion host) and a private subnet. After creation, I edited the subnet settings to auto-assign the IPv4 address to the public subnet.
 
 <p align="center">
-<img src="s3-public-subnet" height="35%" width="45%"/>
-<img src="s3-private-subnet" height="35%" width="45%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/public-subnet1.png" height="50%" width="70%"/>
+</p>
+<p align="center">
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/public-subnet2.png?raw=true" height="40%" width="48%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/private-subnet.png?raw=true" height="40%" width="48%"/>
 </p>
 
 Configuring Subnet Settings to Auto-Assign IPv4 Address to Subnets
 
 <p align="center">
-<img src="edit-subnet-settings" height="60%" width="80%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/edit-subnet.png" height="50%" width="70%"/>
 </p>
 
 <p align="center">
-<img src="enable-auto-assign-ip" height="60%" width="80%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/enabling-auto-assign-ip-address.png?raw=true" height="50%" width="70%"/>
 </p>
 
 Click the save button after enabling the auto-assign public IPv4 address
 
-<h2 align="left"> Creating and Configuring Route Table</h2>
+<h3 align="left"> Creating and Configuring Route Table</h3>
 
 A default route is usually created after a vpc is created. I edited the name to "Main Route" and edited the route table to send all internet-bound traffic through the IGW. I also associated the public subnets with the main route.
 
 <p align="center">
-<img src="editing-main-route" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/editing-route-for-main-route.png?raw=true" height="70%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="associating-public-subnet-to-main-route" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/associating-public-subnet-to-main-route.png" height="70%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="creating-private-rt" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/creating-private-rt.png" height="90%" width="70%"/>
 </p>
 
 <p align="center">
-<img src="associating-private-subnet-to-private-rt" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/associating-private-subnet-to-private-rt.png" height="75%" width="90%"/>
 </p>
 
 
-<h2 align="left"> Configuring Security Group</h2>
+<h3 align="left"> Configuring Security Group</h3>
 
 I configured the default security group created by the VPC to allow SSH and HTTP traffic from any IPv4 address. 
 
-<p align="center">
-<img src="" height="60%" width="80%"/>
-</p>
-
-
-<h2 align="left"> Launching The EC2 Instances</h2>
+<h3 align="left"> Launching The EC2 Instances</h3>
 The next step is to create the EC2 instances, One in the public subnet which is the bastion host and from where we'll gain access into the private subnet, and the other in the private subnet from where the S3 Bucket would be accessed. After gaining access to the Bastion host using SSH, I used secure copy (SCP) to copy the pem key into the Bastion host so I could then use the key to log into the private subnet since I used the same key for both.
 
 Creating The Public EC2 Instance
 
 <p align="center">
-<img src="public-ec2-1" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/public-ec2-instance1.png" height="50%" width="70%"/>
 </p>
 
 <p align="center">
-<img src="public-ec2-2" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/public-ec2-instance2.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="public-ec2-3" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/public-ec2-instance3.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="public-ec2-4" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/public-ec2-instance4.png" height="75%" width="90%"/>
 </p>
 
-<p align="center">
-<img src="public-ec2-5" height="40%" width="60%"/>
-</p>
-
+I clicked on the "Create" at the bottom of the page
 
 Creating The Private EC2 Instance
 
 <p align="center">
-<img src="private-ec2-1" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/Private-ec2-instance1.png" height="50%" width="70%"/>
 </p>
 
 <p align="center">
-<img src="private-ec2-2" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/Private-ec2-instance2.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="private-ec2-3" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/Private-ec2-instance3.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="private-ec2-4" height="40%" width="60%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/Private-ec2-instance4.png" height="75%" width="90%"/>
 </p>
 
-<p align="center">
-<img src="private-ec2-5" height="40%" width="60%"/>
-</p>
+I clicked on the "Create" at the bottom of the page
 
-
-<h2 align="left"> Creating The S3 Bucket</h2>
+<h3 align="left"> Creating The S3 Bucket</h3>
 
 The next step is to create the S3 bucket and add some content to it (Not very necessary to add content)
 
 <p align="center">
-<img src="s3-bucket-creation1" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/creating-s3-bucket1.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="s3-bucket-creation2" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/creating-s3-bucket2.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="s3-bucket-creation3" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/creating-s3-bucket3.png" height="75%" width="90%"/>
 </p>
 
 Logging to Bastion Host Using SSH
@@ -161,7 +153,7 @@ ssh -i "practice.pem" ec2-user@34.200.249.14
 ```
 
 <p align="center">
-<img src="login-to-public-subnet" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/login-to-public-ec2-instance.png" height="50%" width="70%"/>
 </p>
 
 
@@ -184,19 +176,19 @@ ssh -i "practice.pem" ec2-user@34.200.249.14
 ```
 
 <p align="center">
-<img src="login-to-private-subnet" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/login-to-private-ec2-instance.png" height="75%" width="90%"/>
 </p>
 
-<h2 align="left"> Proof of Concept</h2>
+<h3 align="left"> Proof of Concept</h3>
 
-Just to be sure, I'll try to access the s3 bucket through the private subnet. Two challenges that I faced in this process were that aws cli was not installed in the ubuntu server that I launched, so I created and configured a NAT gateway to provide internet to private subnet and installed aws cli. I deleted the NAT gateway after the installation was complete. The next problem was that the AWS commands refused to execute, so I created an IAM role to give full s3 access and attached it to the private ec2 instance.
+Just to be sure, I'll try to access the s3 bucket through the private subnet. I faced two challenges in this process: aws cli was not installed in the ubuntu server that I launched, so I created and configured a NAT gateway to provide internet to the private subnet and installed aws cli. I deleted the NAT gateway after the installation was complete. The next problem was that the AWS commands refused to execute, so I created an IAM role to give full s3 access and attached it to the private EC2 instance.
 
 <p align="center">
-<img src="attaching-iam-role-instance" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/attaching-iam-role-to-instance.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="attaching-iam-role-instance2" height="45%" width="65%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/attaching-iam-role-to-instance2.png" height="75%" width="90%"/>
 </p>
 
 I eventually tried to access the s3 bucket from the private instance, but because I had not created the VPC  endpoint, the connection just timed out. it did not return details of the s3 bucket.
@@ -204,30 +196,27 @@ I eventually tried to access the s3 bucket from the private instance, but becaus
 ```commandline
 aws s3 ls
 ```
-<p align="center">
-<img src="s3-bucket-not-listing" height="45%" width="65%"/>
-</p>
 
 <h2 align="left"> Creating The VPC EndPoint</h2>
 
 <p align="center">
-<img src="creating-vpc-endpoint1" height="60%" width="80%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/creating-vpc-endpoint.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="creating-vpc-endpoint2" height="60%" width="80%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/creating-vpc-endpoint2.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="creating-vpc-endpoint3" height="60%" width="80%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/creating-vpc-endpoint3.png" height="75%" width="90%"/>
 </p>
 
 <p align="center">
-<img src="creating-vpc-endpoint4" height="60%" width="80%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/creating-vpc-endpoint4.png?raw=true" height="75%" width="90%"/>
 </p>
-
+https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/accessing-s3-via-private-ec2-working.png?raw=true
 After creating the VPC Endpoint, I tried accessing the s3 bucket, and I was able to list the bucket and its content.
 
 <p align="center">
-<img src="accessing-s3-bucket-via-private-instance" height="60%" width="80%"/>
+<img src="https://github.com/Topzdomain/An-S3-Bucket-Accessed-Via-An-S3-Gateway-Endpoint/blob/main/Screenshots/accessing-s3-via-private-ec2-working.png?raw=true" height="75%" width="90%"/>
 </p>
